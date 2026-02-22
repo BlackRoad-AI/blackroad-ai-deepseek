@@ -1,0 +1,39 @@
+# BlackRoad DeepSeek Model Configurations
+
+models:
+  deepseek-r1-7b:
+    name: deepseek-r1:7b
+    type: reasoning
+    context_window: 128000
+    gpu_memory_utilization: 0.7
+    use_cases: [code, math, reasoning]
+    quantization: Q4_K_M
+
+  deepseek-r1-32b:
+    name: deepseek-r1:32b
+    type: reasoning
+    context_window: 128000
+    gpu_memory_utilization: 0.85
+    use_cases: [complex_code, research, analysis]
+    requires_gpu: nvidia-a100-80gb
+
+  deepseek-coder-v2:
+    name: deepseek-coder-v2:16b
+    type: code
+    context_window: 163840
+    gpu_memory_utilization: 0.75
+    use_cases: [code_generation, code_review, debugging]
+
+  deepseek-math:
+    name: deepseek-math:7b
+    type: math
+    context_window: 4096
+    gpu_memory_utilization: 0.5
+    use_cases: [mathematics, proofs, equations]
+
+routing:
+  code_task: deepseek-coder-v2
+  math_task: deepseek-math
+  reasoning_task: deepseek-r1-7b
+  complex_reasoning: deepseek-r1-32b
+  default: deepseek-r1-7b
