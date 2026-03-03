@@ -304,7 +304,7 @@ jobs:
             }
 
   dependency-audit:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && (hashFiles('package.json') != '' || hashFiles('pnpm-lock.yaml') != '')
     runs-on: ubuntu-latest
     
     steps:
@@ -326,7 +326,7 @@ jobs:
             npm install -g pnpm
             pnpm audit --audit-level=high > audit-report.txt 2>&1 || true
             pnpm audit fix || true
-          else
+          elif [ -f "package.json" ]; then
             npm audit --audit-level=high > audit-report.txt 2>&1 || true
             npm audit fix || true
           fi
