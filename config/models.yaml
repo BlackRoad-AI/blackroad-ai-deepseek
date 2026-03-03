@@ -37,3 +37,11 @@ routing:
   reasoning_task: deepseek-r1-7b
   complex_reasoning: deepseek-r1-32b
   default: deepseek-r1-7b
+
+# @mention aliases — all route directly to Ollama, no external providers.
+mention_routing:
+  ollama: ollama
+  copilot: ollama
+  lucidia: ollama
+  blackboxprogramming: ollama
+  ollama_url: http://localhost:11434
