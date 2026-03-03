@@ -2,12 +2,15 @@
 BlackRoad DeepSeek Client
 Wrapper for DeepSeek models via Ollama
 """
+import os
 import httpx
 import json
 from typing import AsyncIterator, Optional
 
+from auth import get_auth_headers
 
-OLLAMA_URL = "http://localhost:11434"
+
+OLLAMA_URL = os.environ.get("BLACKROAD_OLLAMA_URL", "http://localhost:11434")
 
 MODEL_MAP = {
     "reasoning": "deepseek-r1:7b",
@@ -32,6 +35,7 @@ async def chat(
     async with httpx.AsyncClient(timeout=120.0) as client:
         resp = await client.post(
             f"{OLLAMA_URL}/api/generate",
+            headers=get_auth_headers(),
             json={
                 "model": model_name,
                 "prompt": prompt,
@@ -59,6 +63,7 @@ async def stream_chat(
         async with client.stream(
             "POST",
             f"{OLLAMA_URL}/api/generate",
+            headers=get_auth_headers(),
             json={"model": model_name, "prompt": prompt, "stream": True,
                   "options": {"temperature": temperature}},
         ) as resp:

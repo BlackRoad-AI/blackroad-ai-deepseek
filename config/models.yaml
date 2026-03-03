@@ -37,3 +37,20 @@ routing:
   reasoning_task: deepseek-r1-7b
   complex_reasoning: deepseek-r1-32b
   default: deepseek-r1-7b
+
+# Gateway configuration
+# All traffic routes through the local BlackRoad gateway — no requests leave
+# your infrastructure to external providers (OpenAI, Anthropic, GitHub Copilot).
+#
+# Required environment variables:
+#   BLACKROAD_GATEWAY_URL  - URL of the local gateway (default: http://127.0.0.1:8787)
+#   BLACKROAD_OLLAMA_URL   - URL of the local Ollama instance (default: http://localhost:11434)
+#   BLACKROAD_API_KEY      - Bearer token for gateway authentication (optional but recommended)
+gateway:
+  default_url: "http://127.0.0.1:8787"
+  ollama_url: "http://localhost:11434"
+  auth: bearer_token
+  env_vars:
+    gateway_url: BLACKROAD_GATEWAY_URL
+    ollama_url: BLACKROAD_OLLAMA_URL
+    api_key: BLACKROAD_API_KEY

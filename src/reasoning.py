@@ -6,6 +6,8 @@ Wraps DeepSeek-R1 for multi-step chain-of-thought reasoning.
 import os, httpx
 from typing import Generator
 
+from auth import get_auth_headers
+
 GATEWAY_URL = os.environ.get("BLACKROAD_GATEWAY_URL", "http://127.0.0.1:8787")
 
 def reason(
@@ -30,7 +32,7 @@ def reason(
         "stream": False,
     }
 
-    resp = httpx.post(f"{GATEWAY_URL}/chat", json=payload, timeout=120)
+    resp = httpx.post(f"{GATEWAY_URL}/chat", json=payload, headers=get_auth_headers(), timeout=120)
     resp.raise_for_status()
     data = resp.json()
     content = data.get("content", data.get("choices", [{}])[0].get("message", {}).get("content", ""))
@@ -46,18 +48,13 @@ def reason(
 
     result = {"thinking": think, "answer": answer, "model": model}
     if show_thinking:
-        print(f"
-[Thinking]
-{think}
-")
+        print(f"\n[Thinking]\n{think}\n")
     return result
 
 
 def reason_code(task: str, language: str = "python") -> dict:
     """Use DeepSeek for code generation with reasoning."""
-    problem = f"Write {language} code to: {task}
-
-Include docstrings and type hints."
+    problem = f"Write {language} code to: {task}\n\nInclude docstrings and type hints."
     return reason(problem, model="deepseek-r1:7b", temperature=0.0, show_thinking=True)
 
 
