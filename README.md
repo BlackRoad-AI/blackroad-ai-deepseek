@@ -1,5 +1,13 @@
 # blackroad-ai-deepseek
 
+> DeepSeek-V3 AI model deployment for BlackRoad infrastructure. Proprietary BlackRoad integration.
+
+Part of the [BlackRoad OS](https://blackroad.io) ecosystem — [BlackRoad-AI](https://github.com/BlackRoad-AI)
+
+---
+
+# blackroad-ai-deepseek
+
 DeepSeek-V3 AI model deployment for BlackRoad infrastructure. Proprietary BlackRoad integration.
 
 **BlackRoad-AI** — AI — models, inference, agents
